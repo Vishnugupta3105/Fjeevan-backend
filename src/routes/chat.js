@@ -7,13 +7,13 @@ const chatHistory = new Map();
 
 router.post('/chat', async (req, res) => {
   try {
-    const { message, personality } = req.body;
+    const { message, personality, language = 'english', systemPrompt = '' } = req.body;
     
     if (!message || !personality) {
       return res.status(400).json({ error: 'Message and personality are required' });
     }
 
-    console.log('Received chat request:', { message, personality });
+    console.log('Received chat request:', { message, personality, language, systemPrompt });
     
     // Get or initialize chat history for this personality
     if (!chatHistory.has(personality)) {
@@ -26,7 +26,7 @@ router.post('/chat', async (req, res) => {
     history.push({ role: 'user', content: message });
     
     // Generate response
-    const response = await generateTextResponse(message, personality);
+    const response = await generateTextResponse(message, personality, language, systemPrompt);
     
     // Add bot response to history
     history.push({ role: 'assistant', content: response });

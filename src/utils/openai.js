@@ -75,7 +75,7 @@ const isAbusive = (text) => {
   return badWords.some(word => lower.includes(word));
 };
 
-const generateTextResponse = async (message, personality) => {
+const generateTextResponse = async (message, personality, language = 'english', systemPrompt = '') => {
   try {
     if (!TOGETHER_API_KEY) throw new Error('Together API key not set!');
 
@@ -83,8 +83,12 @@ const generateTextResponse = async (message, personality) => {
       return "I'm sorry, but I cannot respond to inappropriate or abusive questions. Please ask something respectful.";
     }
 
-    // Always use English system prompt
-    let basePrompt = getPersonalityPrompt(personality) + '\n\nAnswer in English.';
+    // Get the personality prompt and add any additional system prompt
+    let basePrompt = getPersonalityPrompt(personality);
+    if (systemPrompt) {
+      basePrompt += `\n\n${systemPrompt}`;
+    }
+    basePrompt += '\n\nAnswer in English.';
 
     const response = await axios.post(
       'https://api.together.xyz/v1/chat/completions',
