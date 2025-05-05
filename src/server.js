@@ -11,7 +11,7 @@ dotenv.config();
 console.log('Environment variables loaded:', {
   PORT: process.env.PORT,
   NODE_ENV: process.env.NODE_ENV,
-  HAS_OPENAI_KEY: !!process.env.OPENAI_API_KEY
+  HAS_TOGETHER_KEY: !!process.env.TOGETHER_API_KEY
 });
 
 const app = express();
@@ -39,7 +39,7 @@ app.get('/health', (req, res) => {
     env: {
       PORT: process.env.PORT,
       NODE_ENV: process.env.NODE_ENV,
-      HAS_OPENAI_KEY: !!process.env.OPENAI_API_KEY
+      HAS_TOGETHER_KEY: !!process.env.TOGETHER_API_KEY
     }
   });
 });
