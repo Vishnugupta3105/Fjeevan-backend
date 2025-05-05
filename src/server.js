@@ -17,8 +17,16 @@ console.log('Environment variables loaded:', {
 const app = express();
 const server = http.createServer(app);
 
+// CORS configuration
+const corsOptions = {
+  origin: ['https://fjeevan-frontend.vercel.app', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
